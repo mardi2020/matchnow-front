@@ -6,8 +6,13 @@ import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { useEffect, useState } from "react";
-import { getProjects, getProjectsByCategory } from "../../api/Project";
+import {
+  getProjects,
+  getProjectsByCategory,
+  searchProjectByTitle,
+} from "../../api/Project";
 import { Link } from "react-router-dom";
+import { TextField } from "@mui/material";
 
 const categories = {
   NONE: "분류 없음",
@@ -19,22 +24,40 @@ const categories = {
 export default function ProjectList() {
   const [projects, setProjects] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState("NONE");
-
+  const [searchTitle, setSearchTitle] = useState("");
   useEffect(() => {
-    if (selectedCategory === "NONE") {
-      getProjects().then((res) => {
-        setProjects(res.data);
-      });
+    if (searchTitle === "") {
+      if (selectedCategory === "NONE") {
+        getProjects().then((res) => {
+          setProjects(res.data);
+        });
+      } else {
+        getProjectsByCategory(selectedCategory).then((res) => {
+          setProjects(res.data);
+        });
+      }
     } else {
-      getProjectsByCategory(selectedCategory).then((res) => {
-        setProjects(res.data);
+      setSelectedCategory("NONE");
+      searchProjectByTitle(searchTitle).then((res) => {
+        console.log(res.data);
+        setProjects(res.data.content);
       });
     }
-  }, [selectedCategory]);
+  }, [selectedCategory, searchTitle]);
 
   return (
     <Container sx={{ py: 4 }} maxWidth="md">
       <Grid container justifyContent="flex-end">
+        <TextField
+          required
+          id="title"
+          name="title"
+          label="제목"
+          value={`${searchTitle}`}
+          onChange={(e) => {
+            setSearchTitle(e.target.value);
+          }}
+        />
         {Object.keys(categories).map((key) => (
           <Button
             disabled={selectedCategory === key}
