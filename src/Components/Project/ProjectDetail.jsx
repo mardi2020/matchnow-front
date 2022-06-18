@@ -113,14 +113,14 @@ export default function ProjectDetail({ isLoggedIn, user }) {
           <Button size="small">메시지 보내기</Button>
         </Link>
       )}
-      <div>{project.title}</div>
-      <div>{project.mainText}</div>
-      <div>{project.writer}</div>
-      <div>{project.inputImage}</div>
-      <div>{project.wantCnt}</div>
-      <div>{project.nowPeopleCnt}</div>
-      <div>{project.state}</div>
-      <div>{project.category}</div>
+      <div>제목: {project.title}</div>
+      <div>내용: {project.mainText}</div>
+      <div>작성자: {project.writer}</div>
+      <div>이미지: {project.inputImage}</div>
+      <div>정원: {project.wantCnt}</div>
+      <div>현재원: {project.nowPeopleCnt}</div>
+      <div>상태: {project.state}</div>
+      <div>카테고리: {project.category}</div>
       <TextField
         required
         id="commentText"
@@ -157,9 +157,9 @@ export default function ProjectDetail({ isLoggedIn, user }) {
         return (
           <div>
             <div>--------------------------</div>
-            <div>{comment.user.username}</div>
-            <div>{comment.text}</div>
-            <div>{comment.createAt}</div>
+            <div>작성자: {comment.user.username}</div>
+            <div>댓글: {comment.text}</div>
+            <div>작성일: {comment.createAt}</div>
             {isLoggedIn && comment.user.username === user.username && (
               <Button
                 size="small"
