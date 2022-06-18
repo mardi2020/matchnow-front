@@ -2,6 +2,11 @@ import { Button, MenuItem, TextField } from "@mui/material";
 import { useEffect, useState } from "react";
 import { Link, Navigate, useParams } from "react-router-dom";
 import {
+  deleteComment,
+  getCommentByProjectId,
+  uploadComment,
+} from "../../api/Comment";
+import {
   editProjectState,
   getProjectById,
   deleteProject,
@@ -28,6 +33,8 @@ const categories = [
 export default function ProjectDetail({ isLoggedIn, user }) {
   const params = useParams();
   const [project, setProject] = useState({});
+  const [comments, setComments] = useState([]);
+  const [commentText, setCommentText] = useState("");
   const [hasError, setHasError] = useState(false);
 
   useEffect(() => {
@@ -35,6 +42,14 @@ export default function ProjectDetail({ isLoggedIn, user }) {
       getProjectById(params.id)
         .then((res) => {
           setProject(res.data);
+        })
+        .catch((e) => {
+          setHasError(true);
+        });
+
+      getCommentByProjectId(params.id)
+        .then((res) => {
+          setComments(res.data);
         })
         .catch((e) => {
           setHasError(true);
@@ -98,6 +113,68 @@ export default function ProjectDetail({ isLoggedIn, user }) {
       <div>{project.nowPeopleCnt}</div>
       <div>{project.state}</div>
       <div>{project.category}</div>
+      <TextField
+        required
+        id="commentText"
+        name="commentText"
+        label="댓글작성"
+        fullWidth
+        variant="outlined"
+        value={commentText}
+        onChange={(e) => {
+          setCommentText(e.target.value);
+        }}
+      />
+      <Button
+        size="small"
+        onClick={() => {
+          uploadComment({
+            text: commentText,
+            projectId: project.projectId,
+          }).then((res) => {
+            alert(res.data);
+            getCommentByProjectId(params.id)
+              .then((res) => {
+                setComments(res.data);
+              })
+              .catch((e) => {
+                setHasError(true);
+              });
+          });
+        }}
+      >
+        댓글작성
+      </Button>
+      {comments.map((comment) => {
+        return (
+          <div>
+            <div>--------------------------</div>
+            <div>{comment.user.username}</div>
+            <div>{comment.text}</div>
+            <div>{comment.createAt}</div>
+            {isLoggedIn && comment.user.username === user.username && (
+              <Button
+                size="small"
+                onClick={() => {
+                  deleteComment(comment.commentId).then((res) => {
+                    alert(res.data);
+                    getCommentByProjectId(params.id)
+                      .then((res) => {
+                        setComments(res.data);
+                      })
+                      .catch((e) => {
+                        setHasError(true);
+                      });
+                  });
+                }}
+              >
+                삭제
+              </Button>
+            )}
+            <div>--------------------------</div>
+          </div>
+        );
+      })}
     </>
   );
 }
