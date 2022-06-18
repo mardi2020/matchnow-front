@@ -3,6 +3,9 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { getMyInfo } from "./api/User";
 import Header from "./Components/Common/Header";
 import Home from "./Components/Home";
+import MessageSend from "./Components/Message/MessageSend";
+import RecvMessageList from "./Components/Message/RecvMessageList";
+import SendMessageList from "./Components/Message/SendMessageList";
 import ProjectDetail from "./Components/Project/ProjectDetail";
 import ProjectEdit from "./Components/Project/ProjectEdit";
 import UploadProjectForm from "./Components/Project/Upload/UploadProjectForm";
@@ -54,6 +57,18 @@ function App() {
           <Route
             path="/projects/:id"
             element={<ProjectDetail isLoggedIn={isLoggedIn} user={user} />}
+          ></Route>
+          <Route
+            path="/messages/send"
+            element={<SendMessageList isLoggedIn={isLoggedIn} user={user} />}
+          ></Route>
+          <Route
+            path="/messages/recv"
+            element={<RecvMessageList isLoggedIn={isLoggedIn} user={user} />}
+          ></Route>
+          <Route
+            path="/messages/send/:receiver"
+            element={<MessageSend isLoggedIn={isLoggedIn} user={user} />}
           ></Route>
         </Routes>
       </BrowserRouter>

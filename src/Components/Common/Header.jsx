@@ -48,6 +48,16 @@ function Header({ isLoggedIn, setIsLoggedIn }) {
 
           {isLoggedIn && (
             <>
+              <Link to="/messages/send" style={{ textDecoration: "none" }}>
+                <Button variant="outlined" sx={{ my: 1, mx: 1.5 }}>
+                  보낸 메시지
+                </Button>
+              </Link>
+              <Link to="/messages/recv" style={{ textDecoration: "none" }}>
+                <Button variant="outlined" sx={{ my: 1, mx: 1.5 }}>
+                  받은 메시지
+                </Button>
+              </Link>
               <Button
                 onClick={handleClickLougout}
                 variant="outlined"

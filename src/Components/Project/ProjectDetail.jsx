@@ -105,6 +105,14 @@ export default function ProjectDetail({ isLoggedIn, user }) {
           </Button>
         </>
       )}
+      {isLoggedIn && project.writer !== user.username && (
+        <Link
+          to={`/messages/send/${project.writer}`}
+          style={{ textDecoration: "none" }}
+        >
+          <Button size="small">메시지 보내기</Button>
+        </Link>
+      )}
       <div>{project.title}</div>
       <div>{project.mainText}</div>
       <div>{project.writer}</div>
