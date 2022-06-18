@@ -3,6 +3,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { getMyInfo } from "./api/User";
 import Header from "./Components/Common/Header";
 import Login from "./Components/User/Login";
+import Register from "./Components/User/Register";
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -31,6 +32,10 @@ function App() {
             element={
               <Login isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} />
             }
+          ></Route>
+          <Route
+            path="/register"
+            element={<Register isLoggedIn={isLoggedIn} />}
           ></Route>
         </Routes>
       </BrowserRouter>
