@@ -18,3 +18,9 @@ export const uploadProject = (project) => {
     withCredentials: true,
   });
 };
+
+export const editProject = (id, project) => {
+  return axios.patch(apiInfo.baseUrl + `/project/${id}`, project, {
+    withCredentials: true,
+  });
+};

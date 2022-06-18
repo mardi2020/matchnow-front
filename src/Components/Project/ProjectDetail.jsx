@@ -1,8 +1,9 @@
+import { Button } from "@mui/material";
 import { useEffect, useState } from "react";
-import { Navigate, useParams } from "react-router-dom";
+import { Link, Navigate, useParams } from "react-router-dom";
 import { getProjectById } from "../../api/Project";
 
-export default function ProjectDetail({ isLoggedIn }) {
+export default function ProjectDetail({ isLoggedIn, user }) {
   const params = useParams();
   const [project, setProject] = useState({});
   const [hasError, setHasError] = useState(false);
@@ -25,6 +26,16 @@ export default function ProjectDetail({ isLoggedIn }) {
 
   return (
     <>
+      {isLoggedIn && project.writer === user.username && (
+        <>
+          <Link
+            to={`/projects/edit/${project.projectId}`}
+            style={{ textDecoration: "none" }}
+          >
+            <Button size="small">수정하기</Button>
+          </Link>
+        </>
+      )}
       <div>{project.title}</div>
       <div>{project.mainText}</div>
       <div>{project.writer}</div>

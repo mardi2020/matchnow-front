@@ -4,6 +4,7 @@ import { getMyInfo } from "./api/User";
 import Header from "./Components/Common/Header";
 import Home from "./Components/Home";
 import ProjectDetail from "./Components/Project/ProjectDetail";
+import ProjectEdit from "./Components/Project/ProjectEdit";
 import UploadProjectForm from "./Components/Project/Upload/UploadProjectForm";
 import Login from "./Components/User/Login";
 import Register from "./Components/User/Register";
@@ -45,8 +46,12 @@ function App() {
             element={<UploadProjectForm isLoggedIn={isLoggedIn} />}
           ></Route>
           <Route
+            path="/projects/edit/:id"
+            element={<ProjectEdit isLoggedIn={isLoggedIn} user={user} />}
+          ></Route>
+          <Route
             path="/projects/:id"
-            element={<ProjectDetail isLoggedIn={isLoggedIn} />}
+            element={<ProjectDetail isLoggedIn={isLoggedIn} user={user} />}
           ></Route>
         </Routes>
       </BrowserRouter>
