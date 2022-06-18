@@ -1,14 +1,37 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { getMyInfo } from "./api/User";
 import Header from "./Components/Common/Header";
+import Login from "./Components/User/Login";
 
 function App() {
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [user, setUser] = useState(false);
+
+  useEffect(() => {
+    getMyInfo()
+      .then((res) => {
+        setIsLoggedIn(true);
+        setUser(res.data);
+      })
+      .catch((e) => {
+        setIsLoggedIn(false);
+        setUser(undefined);
+      });
+  }, []);
+
   return (
     <>
       <BrowserRouter>
-        <Header />
+        <Header isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} />
         <Routes>
           <Route path="/"></Route>
+          <Route
+            path="/login"
+            element={
+              <Login isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} />
+            }
+          ></Route>
         </Routes>
       </BrowserRouter>
     </>

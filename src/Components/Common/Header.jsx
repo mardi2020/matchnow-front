@@ -4,8 +4,19 @@ import Button from "@mui/material/Button";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import { Link } from "react-router-dom";
+import { logout } from "../../api/User";
 
-function Header() {
+function Header({ isLoggedIn, setIsLoggedIn }) {
+  const handleClickLougout = (e) => {
+    logout()
+      .then(() => {
+        setIsLoggedIn(false);
+      })
+      .catch((e) => {
+        setIsLoggedIn(false);
+      });
+  };
+
   return (
     <>
       <AppBar
@@ -20,19 +31,32 @@ function Header() {
               MatchNow
             </Typography>
           </Link>
-          <Link to="/register" style={{ textDecoration: "none" }}>
-            <Button variant="outlined" sx={{ my: 1, mx: 1.5 }}>
-              Register
-            </Button>
-          </Link>
-          <Link to="/login" style={{ textDecoration: "none" }}>
-            <Button variant="outlined" sx={{ my: 1, mx: 1.5 }}>
-              Login
-            </Button>
-          </Link>
-          <Button onClick={() => {}} variant="outlined" sx={{ my: 1, mx: 1.5 }}>
-            Logout
-          </Button>
+          {!isLoggedIn && (
+            <>
+              <Link to="/register" style={{ textDecoration: "none" }}>
+                <Button variant="outlined" sx={{ my: 1, mx: 1.5 }}>
+                  Register
+                </Button>
+              </Link>
+              <Link to="/login" style={{ textDecoration: "none" }}>
+                <Button variant="outlined" sx={{ my: 1, mx: 1.5 }}>
+                  Login
+                </Button>
+              </Link>
+            </>
+          )}
+
+          {isLoggedIn && (
+            <>
+              <Button
+                onClick={handleClickLougout}
+                variant="outlined"
+                sx={{ my: 1, mx: 1.5 }}
+              >
+                Logout
+              </Button>
+            </>
+          )}
         </Toolbar>
       </AppBar>
     </>
