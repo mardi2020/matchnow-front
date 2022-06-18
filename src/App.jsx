@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { getMyInfo } from "./api/User";
 import Header from "./Components/Common/Header";
+import Home from "./Components/Home";
 import Login from "./Components/User/Login";
 import Register from "./Components/User/Register";
 
@@ -26,7 +27,7 @@ function App() {
       <BrowserRouter>
         <Header isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} />
         <Routes>
-          <Route path="/"></Route>
+        <Route path="/" element={<Home />}></Route>
           <Route
             path="/login"
             element={
