@@ -7,6 +7,7 @@ import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { useEffect, useState } from "react";
 import { getProjects, getProjectsByCategory } from "../../api/Project";
+import { Link } from "react-router-dom";
 
 const categories = {
   NONE: "분류 없음",
@@ -66,7 +67,12 @@ export default function ProjectList() {
                 </Typography>
               </CardContent>
               <CardActions>
-                <Button size="small">상세보기</Button>
+                <Link
+                  to={`/projects/${project.projectId}`}
+                  style={{ textDecoration: "none" }}
+                >
+                  <Button size="small">상세보기</Button>
+                </Link>
               </CardActions>
             </Card>
           </Grid>

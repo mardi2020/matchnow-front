@@ -3,6 +3,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { getMyInfo } from "./api/User";
 import Header from "./Components/Common/Header";
 import Home from "./Components/Home";
+import ProjectDetail from "./Components/Project/ProjectDetail";
 import UploadProjectForm from "./Components/Project/Upload/UploadProjectForm";
 import Login from "./Components/User/Login";
 import Register from "./Components/User/Register";
@@ -42,6 +43,10 @@ function App() {
           <Route
             path="/upload"
             element={<UploadProjectForm isLoggedIn={isLoggedIn} />}
+          ></Route>
+          <Route
+            path="/projects/:id"
+            element={<ProjectDetail isLoggedIn={isLoggedIn} />}
           ></Route>
         </Routes>
       </BrowserRouter>

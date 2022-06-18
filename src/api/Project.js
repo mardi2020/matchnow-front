@@ -9,6 +9,10 @@ export const getProjectsByCategory = (category) => {
   return axios.get(apiInfo.baseUrl + "/project/category?category=" + category);
 };
 
+export const getProjectById = (id) => {
+  return axios.get(apiInfo.baseUrl + "/project/" + id);
+}
+
 export const uploadProject = (project) => {
   return axios.post(apiInfo.baseUrl + "/project", project, {
     withCredentials: true,
