@@ -6,7 +6,7 @@ import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { useEffect, useState } from "react";
-import { getProjects } from "../../api/Project";
+import { getProjects, getProjectsByCategory } from "../../api/Project";
 
 const categories = {
   NONE: "분류 없음",
@@ -17,15 +17,36 @@ const categories = {
 
 export default function ProjectList() {
   const [projects, setProjects] = useState([]);
+  const [selectedCategory, setSelectedCategory] = useState("NONE");
 
   useEffect(() => {
-    getProjects().then((res) => {
-      setProjects(res.data);
-    });
-  }, []);
+    if (selectedCategory === "NONE") {
+      getProjects().then((res) => {
+        setProjects(res.data);
+      });
+    } else {
+      getProjectsByCategory(selectedCategory).then((res) => {
+        setProjects(res.data);
+      });
+    }
+  }, [selectedCategory]);
 
   return (
     <Container sx={{ py: 4 }} maxWidth="md">
+      <Grid container justifyContent="flex-end">
+        {Object.keys(categories).map((key) => (
+          <Button
+            disabled={selectedCategory === key}
+            key={key}
+            size="small"
+            onClick={() => {
+              setSelectedCategory(key);
+            }}
+          >
+            {categories[key]}
+          </Button>
+        ))}
+      </Grid>
       <Grid container spacing={2}>
         {projects.map((project) => (
           <Grid item key={project.projectId} xs={12} sm={6} md={4}>
