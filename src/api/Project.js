@@ -11,7 +11,7 @@ export const getProjectsByCategory = (category) => {
 
 export const getProjectById = (id) => {
   return axios.get(apiInfo.baseUrl + "/project/" + id);
-}
+};
 
 export const uploadProject = (project) => {
   return axios.post(apiInfo.baseUrl + "/project", project, {
@@ -23,4 +23,14 @@ export const editProject = (id, project) => {
   return axios.patch(apiInfo.baseUrl + `/project/${id}`, project, {
     withCredentials: true,
   });
+};
+
+export const editProjectState = (id, state) => {
+  return axios.patch(
+    apiInfo.baseUrl + `/project/state/${id}`,
+    { state: state },
+    {
+      withCredentials: true,
+    }
+  );
 };

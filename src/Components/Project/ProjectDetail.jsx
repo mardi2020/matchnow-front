@@ -1,7 +1,25 @@
-import { Button } from "@mui/material";
+import { Button, MenuItem, TextField } from "@mui/material";
 import { useEffect, useState } from "react";
 import { Link, Navigate, useParams } from "react-router-dom";
-import { getProjectById } from "../../api/Project";
+import { editProjectState, getProjectById } from "../../api/Project";
+
+const categories = [
+  {
+    value: "RECRUITING",
+    label: "모집중",
+    index: 0,
+  },
+  {
+    value: "COMPLETED",
+    label: "완료",
+    index: 1,
+  },
+  {
+    value: "CANCELED ",
+    label: "취소",
+    index: 2,
+  },
+];
 
 export default function ProjectDetail({ isLoggedIn, user }) {
   const params = useParams();
@@ -34,6 +52,27 @@ export default function ProjectDetail({ isLoggedIn, user }) {
           >
             <Button size="small">수정하기</Button>
           </Link>
+          <TextField
+            id="category"
+            select
+            label="상태변경"
+            onChange={(e) => {
+              editProjectState(project.projectId, e.target.value).then(
+                (res) => {
+                  setProject({
+                    ...project,
+                    state: categories[e.target.value].value,
+                  });
+                }
+              );
+            }}
+          >
+            {categories.map((option) => (
+              <MenuItem key={option.value} value={option.index}>
+                {option.label}
+              </MenuItem>
+            ))}
+          </TextField>
         </>
       )}
       <div>{project.title}</div>
