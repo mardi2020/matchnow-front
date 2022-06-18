@@ -1,7 +1,11 @@
 import { Button, MenuItem, TextField } from "@mui/material";
 import { useEffect, useState } from "react";
 import { Link, Navigate, useParams } from "react-router-dom";
-import { editProjectState, getProjectById } from "../../api/Project";
+import {
+  editProjectState,
+  getProjectById,
+  deleteProject,
+} from "../../api/Project";
 
 const categories = [
   {
@@ -73,6 +77,17 @@ export default function ProjectDetail({ isLoggedIn, user }) {
               </MenuItem>
             ))}
           </TextField>
+          <Button
+            size="small"
+            onClick={() => {
+              deleteProject(project.projectId).then((res) => {
+                alert(res.data);
+                setHasError(true);
+              });
+            }}
+          >
+            삭제
+          </Button>
         </>
       )}
       <div>{project.title}</div>

@@ -34,3 +34,9 @@ export const editProjectState = (id, state) => {
     }
   );
 };
+
+export const deleteProject = (id) => {
+  return axios.delete(apiInfo.baseUrl + `/project/${id}`, {
+    withCredentials: true,
+  });
+}
