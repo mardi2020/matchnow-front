@@ -10,20 +10,22 @@ import Login from "./Components/User/Login";
 import Register from "./Components/User/Register";
 
 function App() {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(true);
   const [user, setUser] = useState(false);
 
   useEffect(() => {
-    getMyInfo()
-      .then((res) => {
-        setIsLoggedIn(true);
-        setUser(res.data);
-      })
-      .catch((e) => {
-        setIsLoggedIn(false);
-        setUser(undefined);
-      });
-  }, []);
+    if (isLoggedIn) {
+      getMyInfo()
+        .then((res) => {
+          setIsLoggedIn(true);
+          setUser(res.data);
+        })
+        .catch((e) => {
+          setIsLoggedIn(false);
+          setUser(undefined);
+        });
+    }
+  }, [isLoggedIn]);
 
   return (
     <>
